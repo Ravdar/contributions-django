@@ -26,7 +26,7 @@ DEFAULTS = {
     "GRADIENT3": "#44a340",
     "GRADIENT4": "#1e6823",
     # The name to appear in tooltips (e.g., 12 contributions)
-    "ITEM_NAME": "contributions",
+    "ITEM_NAME": "reviews",
     # Include bootstrap style for outer part of template
     # set this to false if you already have it on your page
     "INCLUDE_BOOTSTRAP": True,

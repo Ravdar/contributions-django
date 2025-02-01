@@ -50,16 +50,31 @@ def generate_contributors_graph(items, title="Contributions"):
     graph = {
         "data": cells,
         "range": range(len(cells[0]) - 6),
-        "longest_streak": dateutils.longest_streak(
-            [key for key, val in counts.items() if val > 0]
-        ),
+        "active_days": len([key for key, val in counts.items() if val > 0]),
+        "longest_streak": (
+            (dateutils.longest_streak([key for key, val in counts.items() if val > 0])[-1] -
+            dateutils.longest_streak([key for key, val in counts.items() if val > 0])[0]).days + 1
+            if dateutils.longest_streak([key for key, val in counts.items() if val > 0])
+            else 0
+),
         "current_streak": dateutils.current_streak(
             [key for key, val in counts.items() if val > 0]
         ),
         "sum": sum(counts.values()),
+        "average_reviews_per_active_day": (
+            sum(counts.values()) / len([key for key, val in counts.items() if val > 0])
+            if len([key for key, val in counts.items() if val > 0]) > 0
+            else 0
+        ),        
         "title": title,
         "start_date": dateutils.display_date(dateutils.start()),
         "today_date": dateutils.display_date(dateutils.today()),
+        "days_between": (dateutils.today() - dateutils.start()).days,
+        "active_days_percentage": (
+        (len([key for key, val in counts.items() if val > 0]) / (dateutils.today() - dateutils.start()).days * 100)
+        if (dateutils.today() - dateutils.start()).days > 0
+        else 0
+    ),
         "last_date": ([""] + sorted([key for key, v in counts.items() if v]))[-1],
     }
 
